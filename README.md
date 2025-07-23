@@ -5,6 +5,8 @@ A Chrome extension that enhances Amazon product pages by removing misleading EMI
 ## Features
 
 - 🧹 Automatically removes distracting EMI sections from Amazon product pages
+- ⚡ Speed mode for instant removal before elements render
+- 🎯 Toggle animations on/off for visual feedback
 - 🌍 Works across multiple Amazon regional sites:
   - Amazon.com (US)
   - Amazon.in (India)
@@ -30,7 +32,9 @@ A Chrome extension that enhances Amazon product pages by removing misleading EMI
 1. Visit any supported Amazon site
 2. The extension automatically cleans up the product pages
 3. Click the extension icon to access settings
-4. Toggle animations on/off according to your preference
+4. Configure your preferences:
+   - **Animations**: Enable/disable visual feedback when removing elements
+   - **Speed Mode**: Enable for instant removal of EMI elements before they render
 
 ## Development
 
