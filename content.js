@@ -19,51 +19,42 @@ const injectStyles = () => {
     style.textContent = `
         @keyframes highlight-pulse {
             0% {
-                box-shadow: 0 0 5px 2px rgba(255, 107, 107, 0.6);
-                background-color: rgba(255, 229, 229, 0.4);
+                box-shadow: 0 0 2px 1px rgba(255, 107, 107, 0.3);
+                background-color: rgba(255, 229, 229, 0.2);
             }
             50% {
-                box-shadow: 0 0 25px 12px rgba(255, 107, 107, 0.8);
-                background-color: rgba(255, 229, 229, 0.8);
+                box-shadow: 0 0 8px 3px rgba(255, 107, 107, 0.4);
+                background-color: rgba(255, 229, 229, 0.3);
             }
             100% {
-                box-shadow: 0 0 5px 2px rgba(255, 107, 107, 0.6);
-                background-color: rgba(255, 229, 229, 0.4);
+                box-shadow: 0 0 2px 1px rgba(255, 107, 107, 0.3);
+                background-color: rgba(255, 229, 229, 0.2);
             }
         }
         
-        @keyframes magical-vanish {
+        @keyframes elegant-fade {
             0% {
                 opacity: 1;
-                transform: perspective(1000px) rotateX(0) rotateY(0) scale(1);
+                transform: scale(1);
                 filter: blur(0);
-            }
-            50% {
-                opacity: 0.8;
-                transform: perspective(1000px) rotateX(-15deg) rotateY(15deg) scale(0.9) translateZ(100px);
-                filter: blur(2px);
-                box-shadow: 0 0 30px 15px rgba(255, 107, 107, 0.4);
             }
             100% {
                 opacity: 0;
-                transform: perspective(1000px) rotateX(-30deg) rotateY(45deg) scale(0.6) translateZ(-200px);
-                filter: blur(10px);
-                box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+                transform: scale(0.95);
+                filter: blur(2px);
             }
         }
 
         .emi-highlight {
-            animation: highlight-pulse 1.2s ease-in-out;
-            background-color: rgba(255, 229, 229, 0.6) !important;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            animation: highlight-pulse 0.8s ease-out;
+            background-color: rgba(255, 229, 229, 0.2) !important;
+            border-radius: 4px;
+            transition: all 0.2s ease;
         }
 
         .emi-remove {
-            animation: magical-vanish 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: elegant-fade 0.4s ease-out forwards;
             transform-origin: center;
-            transform-style: preserve-3d;
-            backface-visibility: hidden;
         }
     `;
     document.head.appendChild(style);
