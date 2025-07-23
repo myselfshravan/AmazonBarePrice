@@ -1,17 +1,28 @@
-// Track if animations are enabled (default to true)
+// Track feature states
 let animationsEnabled = true;
+let speedModeEnabled = false;
 
-// Load animation preference
-chrome.storage.sync.get(['animationsEnabled'], (result) => {
+// Load preferences
+chrome.storage.sync.get(['animationsEnabled', 'speedModeEnabled'], (result) => {
     animationsEnabled = result.animationsEnabled !== false;
+    speedModeEnabled = result.speedModeEnabled === true;
 });
 
-// Listen for animation toggle messages
+// Listen for toggle messages
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'toggleAnimations') {
         animationsEnabled = request.enabled;
+    } else if (request.action === 'toggleSpeedMode') {
+        speedModeEnabled = request.enabled;
     }
 });
+
+// Speed mode selector for EMI elements
+const EMI_SELECTORS = [
+    '.a-size-extra-large.inemi-amount',
+    '.a-size-medium.inemi-tenure',
+    '#inemi_feature_div'
+];
 
 // Function to create and inject CSS animations
 const injectStyles = () => {
@@ -75,13 +86,28 @@ const removeWithAnimation = (emiDiv) => {
     }
 };
 
-// Main removal function that checks animation preference
+// Main removal function that checks modes
 const removeEMISection = () => {
-    const emiDiv = document.getElementById('inemi_feature_div');
-    if (animationsEnabled) {
-        removeWithAnimation(emiDiv);
+    if (speedModeEnabled) {
+        // Remove EMI elements immediately using all selectors
+        EMI_SELECTORS.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+                if (!element.classList.contains('emi-processed')) {
+                    element.classList.add('emi-processed');
+                    element.remove();
+                    console.log(`%cAmazonBarePrice: Removed EMI element (${selector}) ⚡`, 'color: #ff6b6b; font-weight: bold; font-size: 12px');
+                }
+            });
+        });
     } else {
-        removeInstantly(emiDiv);
+        // Original behavior for main EMI section
+        const emiDiv = document.getElementById('inemi_feature_div');
+        if (animationsEnabled) {
+            removeWithAnimation(emiDiv);
+        } else {
+            removeInstantly(emiDiv);
+        }
     }
 };
 
@@ -90,7 +116,7 @@ let lastProcessedURL = window.location.href;
 
 // Function to handle page content updates
 const checkForEMISection = () => {
-    console.log('%cAmazonBarePrice: Checking for EMI section...', 'color: #4287f5; font-weight: bold; font-size: 12px');
+    console.log('%cAmazonBarePrice: Checking for EMI sections...', 'color: #4287f5; font-weight: bold; font-size: 12px');
     removeEMISection();
 };
 
@@ -150,25 +176,50 @@ setInterval(urlChangeCallback, 1000);
 
 // Set up MutationObserver to handle dynamic content changes
 const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-        if (mutation.type === 'childList') {
-            const addedEMIDiv = Array.from(mutation.addedNodes).find(
-                node => node.id === 'inemi_feature_div'
-            );
-            if (addedEMIDiv) {
-                removeEMISection();
-                return;
+    if (speedModeEnabled) {
+        // Check all mutations for EMI elements using selectors
+        for (const mutation of mutations) {
+            if (mutation.type === 'childList') {
+                const addedNodes = Array.from(mutation.addedNodes);
+                for (const node of addedNodes) {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        // Check if the node itself matches any selector
+                        if (EMI_SELECTORS.some(selector => node.matches?.(selector))) {
+                            removeEMISection();
+                            return;
+                        }
+                        // Check child elements
+                        const emiElements = node.querySelectorAll(EMI_SELECTORS.join(','));
+                        if (emiElements.length > 0) {
+                            removeEMISection();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        // Original behavior
+        for (const mutation of mutations) {
+            if (mutation.type === 'childList') {
+                const addedEMIDiv = Array.from(mutation.addedNodes).find(
+                    node => node.id === 'inemi_feature_div'
+                );
+                if (addedEMIDiv) {
+                    removeEMISection();
+                    return;
+                }
             }
         }
     }
 });
 
-// Start observing
+// Start observing with more complete monitoring in speed mode
 observer.observe(document.body, {
     childList: true,
     subtree: true,
-    attributes: false,
-    characterData: false
+    attributes: speedModeEnabled, // Monitor attributes in speed mode
+    attributeFilter: speedModeEnabled ? ['class'] : undefined // Watch for class changes in speed mode
 });
 
 // Initial check
