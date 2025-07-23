@@ -21,6 +21,15 @@ A Chrome extension that enhances Amazon product pages by removing misleading EMI
 - ⚙️ Customizable settings through popup interface
 - 🎯 Toggle animations for a smoother experience
 
+## Demo
+
+<div align="center">
+  <a href="https://drive.google.com/file/d/1tCoGpVyMEOWjDak0czAGJcjrXcZAIIqM/view?usp=drive_link">
+    <img src="https://drive.google.com/uc?export=view&id=1tCoGpVyMEOWjDak0czAGJcjrXcZAIIqM" alt="AmazonBarePrice Demo" width="800"/>
+  </a>
+  <p><em>Click the image above to watch the demo video</em></p>
+</div>
+
 ## Installation
 
 1. Download the extension from the Chrome Web Store (link coming soon)
