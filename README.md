@@ -10,25 +10,14 @@ A Chrome extension that enhances Amazon product pages by removing misleading EMI
 - 🌍 Works across multiple Amazon regional sites:
   - Amazon.com (US)
   - Amazon.in (India)
-  - Amazon.co.uk (UK)
-  - Amazon.de (Germany)
-  - Amazon.fr (France)
-  - Amazon.it (Italy)
-  - Amazon.es (Spain)
-  - Amazon.ca (Canada)
-  - Amazon.com.au (Australia)
-  - Amazon.co.jp (Japan)
 - ⚙️ Customizable settings through popup interface
 - 🎯 Toggle animations for a smoother experience
 
 ## Demo
 
-<div align="center">
-  <a href="https://drive.google.com/file/d/1tCoGpVyMEOWjDak0czAGJcjrXcZAIIqM/view?usp=drive_link">
-    <img src="https://drive.google.com/uc?export=view&id=1tCoGpVyMEOWjDak0czAGJcjrXcZAIIqM" alt="AmazonBarePrice Demo" width="800"/>
-  </a>
-  <p><em>Click the image above to watch the demo video</em></p>
-</div>
+https://github.com/user-attachments/assets/87a29f34-c398-407f-86a7-f03cb99ca230
+
+[🔗 Alternative: Watch on Google Drive](https://drive.google.com/file/d/1tCoGpVyMEOWjDak0czAGJcjrXcZAIIqM/view?usp=drive_link)
 
 ## Installation
 
