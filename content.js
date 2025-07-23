@@ -17,44 +17,25 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 const injectStyles = () => {
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes highlight-pulse {
-            0% {
-                box-shadow: 0 0 2px 1px rgba(255, 107, 107, 0.3);
-                background-color: rgba(255, 229, 229, 0.2);
-            }
-            50% {
-                box-shadow: 0 0 8px 3px rgba(255, 107, 107, 0.4);
-                background-color: rgba(255, 229, 229, 0.3);
-            }
-            100% {
-                box-shadow: 0 0 2px 1px rgba(255, 107, 107, 0.3);
-                background-color: rgba(255, 229, 229, 0.2);
-            }
-        }
-        
-        @keyframes elegant-fade {
+        @keyframes soft-fade {
             0% {
                 opacity: 1;
-                transform: scale(1);
                 filter: blur(0);
             }
             100% {
                 opacity: 0;
-                transform: scale(0.95);
-                filter: blur(2px);
+                filter: blur(3px);
             }
         }
 
         .emi-highlight {
-            animation: highlight-pulse 0.8s ease-out;
-            background-color: rgba(255, 229, 229, 0.2) !important;
-            border-radius: 4px;
-            transition: all 0.2s ease;
+            background-color: rgba(255, 229, 229, 0.15) !important;
+            border-radius: 2px;
+            transition: opacity 0.2s ease;
         }
 
         .emi-remove {
-            animation: elegant-fade 0.4s ease-out forwards;
-            transform-origin: center;
+            animation: soft-fade 0.3s ease-out forwards;
         }
     `;
     document.head.appendChild(style);
